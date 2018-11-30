@@ -1,0 +1,54 @@
+package com.mkyong.csv;
+
+import java.util.*;
+import java.io.*;
+import java.util.stream.Collectors;
+
+public class AddressFile
+{
+
+	private static final String CSV_SEPARATOR = ",";
+	private String filename;
+	
+	public AddressFile(String filename)
+	{
+		this.filename = filename;
+	}
+	public String getFilename() {return filename;}
+	
+	
+	public String toLine(Address addr)
+	{
+		String str = addr.stream().map(a -> String.ValueOf(a)).collect(Collectors.joining(","));
+		
+		return str;
+	}
+
+
+	void save(ArrayList<Address> addresses)
+	{
+		
+	}
+
+
+
+	public Address parseLine(String line)
+	{
+		Scanner reader = new Scanner();
+		CSVReader = new CSVReader(new Filereader(filename));
+		String [] nextLine;
+			while((nextLine = reader.readNext()) != null)
+			{
+				addr.id = line[0];
+				addr.name = line[1];
+				addr.street = line[2];
+				addr.zipCode = line[3];
+				addr.city = line[4];
+			}
+		return addr;
+	}
+
+	//ArrayList<Address> load();
+
+
+}
