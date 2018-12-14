@@ -1,54 +1,77 @@
-package com.mkyong.csv;
-
 import java.util.*;
 import java.io.*;
 import java.util.stream.Collectors;
 
 public class AddressFile
 {
-
-	private static final String CSV_SEPARATOR = ",";
-	private String filename;
+	public static final int ADD_ID = 0;
+	public static final int ADD_NAME = 1;
+	public static final int ADD_STREET = 2;
+	public static final int ADD_ZIPCODE = 3;
+	public static final int ADD_CITY = 4;
+	
+	public String filename;
+	Address address = new Address();
 	
 	public AddressFile(String filename)
 	{
-		this.filename = filename;
+		this.filename = filename;		
 	}
 	public String getFilename() {return filename;}
 	
 	
 	public String toLine(Address addr)
 	{
-		String str = addr.stream().map(a -> String.ValueOf(a)).collect(Collectors.joining(","));
+        StringBuilder sb = new StringBuilder();
+        sb.append(addr.id);
+        sb.append(",");
+        sb.append(addr.name);
+        sb.append(",");
+        sb.append(addr.street);
+        sb.append(",");
+        sb.append(addr.zipCode);
+        sb.append(",");
+        sb.append(addr.city);
+        sb.append('\n');
+		
+		
+		
+        String str = sb.toString();
 		
 		return str;
 	}
 
 
-	void save(ArrayList<Address> addresses)
+	public Address parseLine(String line)
 	{
+		String[] tokens = line.split(",");
+		Address addr = new Address(Integer.parseInt(tokens[ADD_ID]); tokens[ADD_NAME]; tokens[ADD_STREET]; Integer.parseInt(tokens[ADD_ZIPCODE]); tokens[ADD_CITY]);
+		
+		return addr;	
 		
 	}
 
-
-
-	public Address parseLine(String line)
-	{
-		Scanner reader = new Scanner();
-		CSVReader = new CSVReader(new Filereader(filename));
-		String [] nextLine;
-			while((nextLine = reader.readNext()) != null)
-			{
-				addr.id = line[0];
-				addr.name = line[1];
-				addr.street = line[2];
-				addr.zipCode = line[3];
-				addr.city = line[4];
-			}
-		return addr;
+	
+	public void save(ArrayList<Address> addresses) {
+    FileWriter fw = new FileWriter(filename);
+    String str;
+    for (Address address : addresses){
+       str = address.toLine();
+		fw.append(str);
+		}
 	}
 
-	//ArrayList<Address> load();
-
-
+	
+	public ArrayList<Address> load(){ 
+    int count = 0;
+    String file = filename;
+    List<String[]> content = new ArrayList<>();
+    try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+        String line = "";
+        while ((line = br.readLine()) != null) {
+            list.add(line.split(","));
+        }
+    } 
+    return list;
+	}
 }
